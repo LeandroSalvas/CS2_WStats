@@ -1,0 +1,249 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "ranking": "Ranking",
+    "matches": "Matches",
+    "live": "Live",
+    "rcon": "RCON",
+    "users": "Users",
+    "login": "Sign in"
+  },
+  "common": {
+    "loading": "Loading…",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "working": "Working…",
+    "vs": "vs",
+    "kills": "kills"
+  },
+  "footer": {
+    "text": "CS2 WStats — stats via /api/webhooks · 2D radar with configurable delay"
+  },
+  "dashboard": {
+    "loadingDashboard": "Loading dashboard…",
+    "loadError": "Failed to load dashboard: {{error}}",
+    "lastMatch": "🏆 LAST MATCH",
+    "noMatchesYet": "No finished matches recorded yet.",
+    "registeredPlayers": "Registered Players",
+    "totalKills": "Total Kills",
+    "mapsPlayed": "Maps Played",
+    "seasonPodium": "🏅 SEASON PODIUM",
+    "notEnoughPlayers": "Not enough players yet.",
+    "recentStats": "📊 RECENT STATS",
+    "watchLive": "WATCH MATCH LIVE"
+  },
+  "status": {
+    "online": "ONLINE",
+    "offline": "OFFLINE",
+    "map": "MAP",
+    "players": "PLAYERS",
+    "round": "Round {{n}}",
+    "phaseLive": "Round in progress",
+    "phaseFreeze": "Freeze time",
+    "phaseWarmup": "Warmup",
+    "phaseOver": "Match over"
+  },
+  "podium": {
+    "killsCount": "{{count}} kills"
+  },
+  "rankingPage": {
+    "title": "FULL RANKING",
+    "searchPlaceholder": "Search by name or SteamID…"
+  },
+  "table": {
+    "player": "Player",
+    "kills": "Kills",
+    "deaths": "Deaths",
+    "hsPercent": "HS%",
+    "kd": "K/D",
+    "skill": "Skill",
+    "matches": "Matches",
+    "emptyPlayers": "No players registered yet.",
+    "place1": "1st place",
+    "place2": "2nd place",
+    "place3": "3rd place"
+  },
+  "matches": {
+    "title": "MATCH HISTORY",
+    "allMaps": "All maps",
+    "noneFound": "No matches found.",
+    "matchNo": "MATCH #{{id}} —",
+    "victory": "{{team}} victory",
+    "mvpShort": "⭐ MVP: {{name}} ({{kills}}k)",
+    "ctTitle": "COUNTER-TERRORISTS",
+    "tTitle": "TERRORISTS",
+    "noData": "No data."
+  },
+  "live": {
+    "title": "LIVE RADAR",
+    "connected": "● CONNECTED (+{{seconds}}s delay)",
+    "disconnected": "○ DISCONNECTED",
+    "alive": "{{n}} alive",
+    "bombPlanted": "💣 BOMB PLANTED",
+    "ctEconomy": "CT economy: ${{amount}}",
+    "trEconomy": "T economy: ${{amount}}",
+    "waiting": "Waiting for server connection… Data arrives with broadcast delay.",
+    "c4Carrier": "C4 carrier"
+  },
+  "pagination": {
+    "prev": "‹ Prev",
+    "next": "Next ›"
+  },
+  "profile": {
+    "rankLabel": "in global ranking",
+    "noDataYet": "—",
+    "noSeriesYet": "No daily data recorded yet — metrics start counting from deployment.",
+    "combat": {
+      "title": "🎯 COMBAT",
+      "kills": "Kills",
+      "deaths": "Deaths",
+      "headshots": "HS",
+      "kd": "K/D (Ratio)",
+      "skill": "Skill",
+      "accuracy": "Accuracy",
+      "assists": "Assists",
+      "tk": "TK",
+      "damage": "Total Damage"
+    },
+    "bomb": {
+      "title": "💣 BOMB",
+      "plants": "Plants",
+      "defused": "Defused"
+    },
+    "time": {
+      "title": "⏱️ TIME & SESSION",
+      "hours": "Hours Played",
+      "connections": "Total Connections",
+      "firstSeen": "First Seen",
+      "lastMap": "Last Map"
+    },
+    "charts": {
+      "killsTitle": "📈 Kills Evolution (daily)",
+      "skillKdTitle": "📉 Skill & K/D Evolution",
+      "killsDay": "Kills per day"
+    },
+    "recentTitle": "🗂️ Recent History",
+    "table": {
+      "date": "Date"
+    }
+  },
+  "killfeed": {
+    "title": "Kill Feed",
+    "empty": "Waiting for kills…",
+    "world": "world",
+    "headshot": "Headshot"
+  },
+  "login": {
+    "title": "Sign in",
+    "subtitle": "Administrative access. New accounts require approval.",
+    "username": "Username / e-mail",
+    "password": "Password",
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "or": "or",
+    "googleButton": "Sign in with Google",
+    "googleDisabledHint": "Google sign-in is temporarily disabled.",
+    "wrongCredentials": "Wrong username or password.",
+    "genericError": "Sign-in failed. Please try again.",
+    "errors": {
+      "google_desabilitado": "Google sign-in is currently disabled.",
+      "oauth_state_invalido": "Login session expired. Please try again.",
+      "email_nao_verificado": "Your Google e-mail is not verified.",
+      "email_ja_registrado": "This e-mail is already linked to another account.",
+      "oauth_token": "Google authentication failed.",
+      "oauth_idtoken": "Invalid response from Google.",
+      "access_denied": "Authorization denied by Google.",
+      "default": "Authentication failed."
+    }
+  },
+  "pending": {
+    "title": "Awaiting Approval",
+    "hello": "Hi, <strong>{{name}}</strong>. Your account has been registered and is pending administrator approval.",
+    "verifyAgain": "Check again",
+    "logout": "Sign out"
+  },
+  "rcon": {
+    "placeholder": "Type an RCON command…",
+    "execute": "Run",
+    "executing": "…",
+    "terminalHint": "Terminal ready. Type <code>status</code> to see who is online.",
+    "noOutput": "(no output)",
+    "history": "History",
+    "historyEmpty": "No commands in this session.",
+    "reference": "Reference",
+    "searchRef": "Search command…",
+    "playersTitle": "Connected players",
+    "querying": "Querying server…",
+    "nobodyConnected": "Nobody connected.",
+    "queryFailed": "Query failed: {{error}}",
+    "colUserid": "Userid",
+    "colName": "Name",
+    "colTeam": "Team",
+    "colKda": "K / D / A",
+    "colPing": "Ping",
+    "colConnected": "Connected",
+    "kick": "Kick",
+    "ban": "Ban",
+    "kickModalTitle": "Confirm kick",
+    "kickModalBody": "Are you sure you want to disconnect <strong>{{name}}</strong>?",
+    "kickConfirm": "Kick",
+    "banModalTitle": "Confirm ban",
+    "banModalBody": "Ban <strong>{{name}}</strong> from the server:",
+    "duration": "Duration",
+    "reason": "Reason (optional)",
+    "reasonPlaceholder": "e.g. unsportsmanlike conduct",
+    "banNote": "The ban is recorded on the server (<code>writeid</code>) and the player will be disconnected.",
+    "banConfirm": "Ban",
+    "durations": {
+      "m30": "30 minutes",
+      "h1": "1 hour",
+      "d1": "1 day",
+      "w1": "1 week",
+      "permanent": "Permanent"
+    },
+    "ref": {
+      "status": "Connected players, map and server version.",
+      "users": "Players currently connected (current CS2).",
+      "stats": "Player K/D in the current match.",
+      "kickid": "Disconnects a player by userid.",
+      "banid": "Bans for N minutes (0 = permanent).",
+      "writeid": "Persists the ban list into banned_user.cfg.",
+      "removeid": "Removes an entry from the ban list.",
+      "mp_warmup_end": "Ends warmup and starts the match.",
+      "mp_restartgame": "Restarts the match (score reset).",
+      "mp_maxrounds": "Sets the maximum number of rounds.",
+      "mp_freezetime": "Freeze time duration per round.",
+      "changelevel": "Changes the map (e.g. de_mirage).",
+      "sv_cheats": "Enables server cheats (practice).",
+      "bot_kick": "Removes all bots.",
+      "bot_add_ct": "Adds a bot to the CT team.",
+      "bot_add_t": "Adds a bot to the T team.",
+      "tv_enable": "Toggles GOTV on/off.",
+      "hostname": "Changes the server name."
+    }
+  },
+  "users": {
+    "title": "User Management",
+    "pendingRequests": "Pending requests",
+    "noPending": "No pending requests.",
+    "approveAdmin": "Approve as Admin",
+    "approveSuper": "Approve as Super Admin",
+    "reject": "Reject",
+    "activeUsers": "Users with access",
+    "colName": "Name",
+    "colEmail": "E-mail",
+    "colRole": "Role",
+    "protectedLabel": "protected",
+    "fixedTag": "FIXED",
+    "promote": "Promote",
+    "demote": "Demote",
+    "remove": "Remove",
+    "removeModalTitle": "Remove user",
+    "removeModalBody": "Remove access for <strong>{{name}}</strong> ({{email}})? The associated RCON history will also be deleted.",
+    "role": {
+      "PENDENTE": "PENDING",
+      "ADMIN": "ADMIN",
+      "SUPER_ADMIN": "SUPER ADMIN"
+    }
+  }
+}

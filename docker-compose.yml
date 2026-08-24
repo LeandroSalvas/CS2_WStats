@@ -1,0 +1,115 @@
+name: cs2_wstats
+
+services:
+  # ------------------------------------------------------------------
+  # Servidor dedicado de CS2 (já existente nesta stack)
+  # ------------------------------------------------------------------
+  cs2wstats:
+    image: cm2network/cs2
+    restart: always
+    environment:
+      CS2_PORT: "27015"
+      CS2_MAXPLAYERS: ${CS2_MAXPLAYERS:-24}
+      CS2_SERVERNAME: ${CS2_SERVERNAME}
+      CS2_STARTMAP: ${CS2_STARTMAP:-de_dust2}
+      CS2_GAMETYPE: "0"
+      CS2_GAMEMODE: "0"
+      CS2_RCONPW: ${RCON_PASSWORD}
+      CS2_PW: ${SERVER_PASSWORD:-}
+      SRCDS_TOKEN: ${SRCDS_TOKEN:-}
+      CS2_LAN: "0"
+      CS2_BOT_QUOTA: ${CS2_BOT_QUOTA:-0}
+      CS2_BOT_QUOTA_MODE: ${CS2_BOT_QUOTA_MODE:-normal}
+      CS2_BOOT_TIMEOUT: ${CS2_BOOT_TIMEOUT:-240}
+      CS2_BOOT_MAX_ATTEMPTS: ${CS2_BOOT_MAX_ATTEMPTS:-10}
+      TV_ENABLE: "1"
+      TV_PORT: "27016"
+      STEAMAPPVALIDATE: ${STEAMAPPVALIDATE:-0}
+      WEBHOOK_SECRET: ${WEBHOOK_SECRET:-}
+    ports:
+      - "27035:27015/udp"
+      - "27035:27015/tcp"
+      - "27036:27016/udp"
+      - "27036:27016/tcp"
+    volumes:
+      - cs2wstats_data:/home/steam/cs2-dedicated
+      - cs2wstats_steam:/home/steam/Steam
+      - ./entry.sh:/home/steam/entry.sh
+      - ./server.cfg:/etc/server.cfg:ro
+      # GSI -> http://cs2-web-app:3000/api/gsi (copiado pelo entry.sh)
+      - ./gamestate_integration_custom.cfg:/etc/gamestate_integration_custom.cfg:ro
+      # Plugin CS2WStats (DLL compilada) -> instalado pelo entry.sh em addons/counterstrikesharp
+      - ./cs2-plugin/dist:/etc/cs2wstats-plugin:ro
+    security_opt:
+      - seccomp=unconfined
+    networks:
+      - cs2-network
+
+  # ------------------------------------------------------------------
+  # Banco de dados PostgreSQL (estatísticas persistidas via Prisma)
+  # ------------------------------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-wstats}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-wstats_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-wstats}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    networks:
+      - cs2-network
+
+  # ------------------------------------------------------------------
+  # Aplicação fullstack: API + Dashboard + Radar 2D ao vivo
+  # Internamente em :3000 — o CS2 fala com ela via http://cs2-web-app:3000
+  # ------------------------------------------------------------------
+  cs2-web-app:
+    build: ./app
+    image: cs2-wstats-app:local
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-wstats}:${POSTGRES_PASSWORD:-wstats_secret}@postgres:5432/${POSTGRES_DB:-wstats}?schema=public
+      PORT: "3000"
+      SERVER_NAME: ${CS2_SERVERNAME:-Zueira CS2}
+      GSI_DELAY_SECONDS: ${GSI_DELAY_SECONDS:-30}
+      WEBHOOK_SECRET: ${WEBHOOK_SECRET:-}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      # Prefixo público da SPA atrás do proxy reverso (https://.../cs2/).
+      # Injetado no index.html em runtime; rotas internas continuam na raiz.
+      PUBLIC_BASE_PATH: ${PUBLIC_BASE_PATH:-/}
+      # ---- Auth / RBAC ----
+      AUTH_JWT_SECRET: ${AUTH_JWT_SECRET:-}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@wstats.local}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      AUTH_GOOGLE_ENABLED: ${AUTH_GOOGLE_ENABLED:-false}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      APP_PUBLIC_URL: ${APP_PUBLIC_URL:-}
+      # ---- RCON (painel admin) ----
+      RCON_HOST: ${RCON_HOST:-cs2wstats}
+      RCON_PORT: ${RCON_PORT:-27015}
+      RCON_PASSWORD: ${RCON_PASSWORD:-}
+      RCON_BLOCKED_COMMANDS: ${RCON_BLOCKED_COMMANDS:-quit,_restart,exit,sv_password}
+    ports:
+      - "${APP_PORT:-8090}:3000"
+    networks:
+      - cs2-network
+
+volumes:
+  cs2wstats_data:
+  cs2wstats_steam:
+  postgres_data:
+
+networks:
+  cs2-network:
+    driver: bridge

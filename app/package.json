@@ -1,0 +1,22 @@
+{
+  "name": "cs2-wstats",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CS2 WStats — Estatísticas e radar 2D ao vivo para servidores dedicados de CS2",
+  "workspaces": [
+    "server",
+    "web"
+  ],
+  "scripts": {
+    "dev:server": "npm run dev -w server",
+    "dev:web": "npm run dev -w web",
+    "build": "npm run build -w server && npm run build -w web",
+    "typecheck": "npm run typecheck -w server && npm run typecheck -w web",
+    "db:generate": "npm run db:generate -w server",
+    "db:migrate": "npm run db:migrate -w server",
+    "mock": "npm run mock -w server"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

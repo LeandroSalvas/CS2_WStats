@@ -1,0 +1,249 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "ranking": "Ranking",
+    "matches": "Partidas",
+    "live": "Ao Vivo",
+    "rcon": "RCON",
+    "users": "Usuários",
+    "login": "Entrar"
+  },
+  "common": {
+    "loading": "Carregando…",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "working": "Executando…",
+    "vs": "vs",
+    "kills": "kills"
+  },
+  "footer": {
+    "text": "CS2 WStats — estatísticas com /api/webhooks · radar 2D com delay configurável"
+  },
+  "dashboard": {
+    "loadingDashboard": "Carregando dashboard…",
+    "loadError": "Falha ao carregar o dashboard: {{error}}",
+    "lastMatch": "🏆 ÚLTIMA PARTIDA",
+    "noMatchesYet": "Nenhuma partida encerrada registrada ainda.",
+    "registeredPlayers": "Jogadores Cadastrados",
+    "totalKills": "Total de Kills",
+    "mapsPlayed": "Mapas Jogados",
+    "seasonPodium": "🏅 PÓDIO DA TEMPORADA",
+    "notEnoughPlayers": "Sem jogadores suficientes.",
+    "recentStats": "📊 ESTATÍSTICAS RECENTES",
+    "watchLive": "VER PARTIDA AO VIVO"
+  },
+  "status": {
+    "online": "ONLINE",
+    "offline": "OFFLINE",
+    "map": "MAPA",
+    "players": "JOGADORES",
+    "round": "Rodada {{n}}",
+    "phaseLive": "Rodada em andamento",
+    "phaseFreeze": "Freeze time",
+    "phaseWarmup": "Aquecimento",
+    "phaseOver": "Fim de partida"
+  },
+  "podium": {
+    "killsCount": "{{count}} kills"
+  },
+  "rankingPage": {
+    "title": "RANKING COMPLETO",
+    "searchPlaceholder": "Buscar por nome ou SteamID…"
+  },
+  "table": {
+    "player": "Player",
+    "kills": "Kills",
+    "deaths": "Deaths",
+    "hsPercent": "HS%",
+    "kd": "K/D",
+    "skill": "Skill",
+    "matches": "Partidas",
+    "emptyPlayers": "Nenhum jogador registrado ainda.",
+    "place1": "1º lugar",
+    "place2": "2º lugar",
+    "place3": "3º lugar"
+  },
+  "matches": {
+    "title": "HISTÓRICO DE PARTIDAS",
+    "allMaps": "Todos os mapas",
+    "noneFound": "Nenhuma partida encontrada.",
+    "matchNo": "PARTIDA #{{id}} —",
+    "victory": "Vitória {{team}}",
+    "mvpShort": "⭐ MVP: {{name}} ({{kills}}k)",
+    "ctTitle": "COUNTER-TERRORISTS",
+    "tTitle": "TERRORISTS",
+    "noData": "Sem dados."
+  },
+  "live": {
+    "title": "RADAR AO VIVO",
+    "connected": "● CONECTADO (+{{seconds}}s delay)",
+    "disconnected": "○ DESCONECTADO",
+    "alive": "{{n}} vivos",
+    "bombPlanted": "💣 BOMBA ARMADA",
+    "ctEconomy": "Economia CT: ${{amount}}",
+    "trEconomy": "Economia TR: ${{amount}}",
+    "waiting": "Aguardando conexão com o servidor… Os dados chegam com delay de transmissão.",
+    "c4Carrier": "Portador da C4"
+  },
+  "pagination": {
+    "prev": "‹ Anterior",
+    "next": "Próxima ›"
+  },
+  "profile": {
+    "rankLabel": "no ranking global",
+    "noDataYet": "—",
+    "noSeriesYet": "Sem dados diários registrados ainda — as métricas começam a contar a partir do deploy.",
+    "combat": {
+      "title": "🎯 COMBATE",
+      "kills": "Kills",
+      "deaths": "Deaths",
+      "headshots": "HS",
+      "kd": "K/D (Ratio)",
+      "skill": "Skill",
+      "accuracy": "Accuracy",
+      "assists": "Assists",
+      "tk": "TK",
+      "damage": "Dano Total"
+    },
+    "bomb": {
+      "title": "💣 BOMBA",
+      "plants": "Plants",
+      "defused": "Defused"
+    },
+    "time": {
+      "title": "⏱️ TEMPO & SESSÃO",
+      "hours": "Horas Jogadas",
+      "connections": "Conexões Totais",
+      "firstSeen": "Primeira Entrada",
+      "lastMap": "Último Mapa"
+    },
+    "charts": {
+      "killsTitle": "📈 Evolução de Kills (diário)",
+      "skillKdTitle": "📉 Evolução de Skill e K/D",
+      "killsDay": "Kills no dia"
+    },
+    "recentTitle": "🗂️ Histórico Recente",
+    "table": {
+      "date": "Data"
+    }
+  },
+  "killfeed": {
+    "title": "Kill Feed",
+    "empty": "Aguardando abates…",
+    "world": "mundo",
+    "headshot": "Headshot"
+  },
+  "login": {
+    "title": "Entrar",
+    "subtitle": "Acesso administrativo. Contas novas passam por aprovação.",
+    "username": "Usuário / e-mail",
+    "password": "Senha",
+    "submit": "Entrar",
+    "submitting": "Entrando…",
+    "or": "ou",
+    "googleButton": "Entrar com Google",
+    "googleDisabledHint": "Login com Google temporariamente desativado.",
+    "wrongCredentials": "Usuário ou senha incorretos.",
+    "genericError": "Falha ao entrar. Tente novamente.",
+    "errors": {
+      "google_desabilitado": "Login com Google está desabilitado no momento.",
+      "oauth_state_invalido": "Sessão de login expirada. Tente novamente.",
+      "email_nao_verificado": "Seu e-mail do Google não está verificado.",
+      "email_ja_registrado": "Este e-mail já está vinculado a outra conta.",
+      "oauth_token": "Falha na autenticação com o Google.",
+      "oauth_idtoken": "Resposta inválida do Google.",
+      "access_denied": "Autorização negada pelo Google.",
+      "default": "Falha na autenticação."
+    }
+  },
+  "pending": {
+    "title": "Aguardando Aprovação",
+    "hello": "Olá, <strong>{{name}}</strong>. Sua conta foi registrada e está pendente de aprovação por um administrador.",
+    "verifyAgain": "Verificar novamente",
+    "logout": "Sair"
+  },
+  "rcon": {
+    "placeholder": "Digite o comando RCON…",
+    "execute": "Executar",
+    "executing": "…",
+    "terminalHint": "Terminal pronto. Digite <code>status</code> para ver quem está online.",
+    "noOutput": "(sem saída)",
+    "history": "Histórico",
+    "historyEmpty": "Nenhum comando nesta sessão.",
+    "reference": "Referência",
+    "searchRef": "Pesquisar comando…",
+    "playersTitle": "Jogadores conectados",
+    "querying": "Consultando servidor…",
+    "nobodyConnected": "Ninguém conectado.",
+    "queryFailed": "Falha ao consultar: {{error}}",
+    "colUserid": "Userid",
+    "colName": "Nome",
+    "colTeam": "Time",
+    "colKda": "K / D / A",
+    "colPing": "Ping",
+    "colConnected": "Conectado",
+    "kick": "Kick",
+    "ban": "Ban",
+    "kickModalTitle": "Confirmar kick",
+    "kickModalBody": "Tem certeza que deseja desconectar <strong>{{name}}</strong>?",
+    "kickConfirm": "Kickar",
+    "banModalTitle": "Confirmar banimento",
+    "banModalBody": "Banir <strong>{{name}}</strong> do servidor:",
+    "duration": "Duração",
+    "reason": "Motivo (opcional)",
+    "reasonPlaceholder": "Ex.: comportamento antidesportivo",
+    "banNote": "O ban é registrado no servidor (<code>writeid</code>) e o jogador será desconectado.",
+    "banConfirm": "Banir",
+    "durations": {
+      "m30": "30 minutos",
+      "h1": "1 hora",
+      "d1": "1 dia",
+      "w1": "1 semana",
+      "permanent": "Permanente"
+    },
+    "ref": {
+      "status": "Jogadores conectados, mapa e versão do servidor.",
+      "users": "Jogadores conectados no momento (CS2 atual).",
+      "stats": "K/D dos jogadores na partida atual.",
+      "kickid": "Desconecta o jogador pelo userid.",
+      "banid": "Bane por minutos (0 = permanente).",
+      "writeid": "Persiste a lista de banidos em banned_user.cfg.",
+      "removeid": "Remove um banimento da lista.",
+      "mp_warmup_end": "Encerra o aquecimento e inicia a partida.",
+      "mp_restartgame": "Reinicia a partida (placar zerado).",
+      "mp_maxrounds": "Define o número máximo de rounds.",
+      "mp_freezetime": "Duração do freezetime por round.",
+      "changelevel": "Troca de mapa (ex.: de_mirage).",
+      "sv_cheats": "Ativa cheats de servidor (treino).",
+      "bot_kick": "Remove todos os bots.",
+      "bot_add_ct": "Adiciona bot no time CT.",
+      "bot_add_t": "Adiciona bot no time TR.",
+      "tv_enable": "Liga/desliga GOTV.",
+      "hostname": "Altera o nome do servidor."
+    }
+  },
+  "users": {
+    "title": "Gerenciamento de Usuários",
+    "pendingRequests": "Solicitações pendentes",
+    "noPending": "Nenhuma solicitação pendente.",
+    "approveAdmin": "Aprovar como Admin",
+    "approveSuper": "Aprovar como Super Admin",
+    "reject": "Rejeitar",
+    "activeUsers": "Usuários com acesso",
+    "colName": "Nome",
+    "colEmail": "E-mail",
+    "colRole": "Papel",
+    "protectedLabel": "protegido",
+    "fixedTag": "FIXO",
+    "promote": "Promover",
+    "demote": "Rebaixar",
+    "remove": "Remover",
+    "removeModalTitle": "Remover usuário",
+    "removeModalBody": "Remover o acesso de <strong>{{name}}</strong> ({{email}})? O histórico RCON associado também será apagado.",
+    "role": {
+      "PENDENTE": "PENDENTE",
+      "ADMIN": "ADMIN",
+      "SUPER_ADMIN": "SUPER ADMIN"
+    }
+  }
+}

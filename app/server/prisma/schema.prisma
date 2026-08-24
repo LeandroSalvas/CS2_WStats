@@ -1,0 +1,136 @@
+// CS2 WStats — esquema relacional de estatísticas persistidas.
+// Dados de telemetria GSI (posições do radar 2D) NUNCA são gravados aqui:
+// vivem apenas em memória (GSIBufferManager) e vão para o WebSocket.
+
+generator client {
+  provider      = "prisma-client-js"
+  // Garante o engine correto no Debian bookworm (OpenSSL 3) mesmo quando a
+  // detecção automática falha durante o build multi-stage.
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Player {
+  steamId        String   @id
+  name           String
+  totalKills     Int      @default(0)
+  totalDeaths    Int      @default(0)
+  totalHeadshots Int      @default(0)
+  totalMatches   Int      @default(0)
+
+  // Métricas estendidas (alimentadas por stats[] do plugin a partir do deploy).
+  totalAssists    Int     @default(0)
+  totalTk         Int     @default(0) // teamkills
+  totalShotsFired BigInt  @default(0)
+  totalShotsHit   BigInt  @default(0)
+  totalDamage     BigInt  @default(0)
+  totalPlants     Int     @default(0)
+  totalDefusions  Int     @default(0)
+  secondsPlayed   Int     @default(0)
+  connections     Int     @default(0)
+  lastMapName     String?
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  matchStats MatchPlayerStat[]
+  dailyStats PlayerDailyStat[]
+
+  @@index([totalKills])
+  @@map("players")
+}
+
+/** Série diária para gráficos de evolução (agregada em tempo real nos webhooks). */
+model PlayerDailyStat {
+  id        Int      @id @default(autoincrement())
+  playerId  String
+  day       DateTime @db.Date
+  kills     Int      @default(0)
+  deaths    Int      @default(0)
+  headshots Int      @default(0)
+  assists   Int      @default(0)
+
+  player Player @relation(fields: [playerId], references: [steamId], onDelete: Cascade)
+
+  @@unique([playerId, day])
+  @@index([playerId, day])
+  @@map("player_daily_stats")
+}
+
+model Match {
+  id              Int      @id @default(autoincrement())
+  mapName         String
+  scoreCT         Int
+  scoreTR         Int
+  durationSeconds Int
+  endedAt         DateTime @default(now())
+
+  stats MatchPlayerStat[]
+
+  @@index([endedAt])
+  @@index([mapName])
+  @@map("matches")
+}
+
+model MatchPlayerStat {
+  id        Int     @id @default(autoincrement())
+  matchId   Int
+  playerId  String
+  team      String  @default("CT") // "CT" | "TR"
+  kills     Int     @default(0)
+  deaths    Int     @default(0)
+  assists   Int     @default(0)
+  headshots Int     @default(0)
+
+  match  Match  @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  player Player @relation(fields: [playerId], references: [steamId], onDelete: Cascade)
+
+  @@unique([matchId, playerId])
+  @@index([playerId])
+  @@map("match_player_stats")
+}
+
+// ---------------------------------------------------------------------
+// Autenticação RBAC + auditoria RCON
+// ---------------------------------------------------------------------
+
+enum Role {
+  PENDENTE
+  ADMIN
+  SUPER_ADMIN
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  name         String
+  avatar       String?
+  googleSub    String?  @unique
+  passwordHash String?
+  role         Role     @default(PENDENTE)
+  isLocalAdmin Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  rconLogs RconLog[]
+
+  @@map("users")
+}
+
+model RconLog {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  command   String
+  response  String   @db.Text
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("rcon_logs")
+}

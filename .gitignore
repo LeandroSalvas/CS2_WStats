@@ -1,0 +1,10 @@
+.env
+node_modules/
+app/server/dist/
+app/web/dist/
+*.log
+
+# Artefatos de build do plugin C# (a DLL final em dist/ É versionada)
+cs2-plugin/**/obj/
+cs2-plugin/**/bin/
+*.pdb
