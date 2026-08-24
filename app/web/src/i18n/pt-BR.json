@@ -17,7 +17,8 @@
     "kills": "kills"
   },
   "footer": {
-    "text": "CS2 WStats — estatísticas com /api/webhooks · radar 2D com delay configurável"
+    "text": "CS2 Server Stats © 2026 — Estatísticas e Telemetria em tempo real.",
+    "by": "by LeandroSalvas"
   },
   "dashboard": {
     "loadingDashboard": "Carregando dashboard…",

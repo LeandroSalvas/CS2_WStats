@@ -104,7 +104,8 @@ function Shell() {
       </main>
 
       <footer className="footer">
-        {t("footer.text")}
+        <div>{t("footer.text")}</div>
+        <div className="footer-by">{t("footer.by")}</div>
       </footer>
     </div>
   );

@@ -501,6 +501,7 @@ main { flex: 1; width: 100%; max-width: 1280px; margin: 0 auto; padding: 24px 20
   border-top: 1px solid var(--border);
 }
 .footer code { color: var(--accent); }
+.footer-by { display: block; margin-top: 4px; font-size: 12px; opacity: 0.8; }
 
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 8px; }
