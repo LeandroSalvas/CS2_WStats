@@ -19,9 +19,9 @@ interface KillVector {
 }
 
 const TEAM_COLORS: Record<string, string> = {
-  CT: "#3b82f6",
-  TR: "#f59e0b",
-  UNASSIGNED: "#94a3b8",
+  CT: "#60a5fa",
+  TR: "#d97706",
+  UNASSIGNED: "#9e8e85",
 };
 
 const DEATH_FADE_MS = 4000;
@@ -292,9 +292,9 @@ export class RadarRenderer {
     }
     // Grade procedural escura quando não há imagem de radar para o mapa.
     const { width: cw, height: ch } = ctx.canvas;
-    ctx.fillStyle = "#0d1117";
+    ctx.fillStyle = "#120e0c";
     ctx.fillRect(0, 0, cw, ch);
-    ctx.strokeStyle = "rgba(56, 189, 248, 0.08)";
+    ctx.strokeStyle = "rgba(158, 142, 133, 0.08)";
     ctx.lineWidth = 1;
     const step = 48;
     ctx.beginPath();
@@ -308,8 +308,8 @@ export class RadarRenderer {
     }
     ctx.stroke();
     if (this.mapName) {
-      ctx.fillStyle = "rgba(148, 163, 184, 0.15)";
-      ctx.font = `700 ${Math.max(18, cw / 28)}px Rajdhani, sans-serif`;
+      ctx.fillStyle = "rgba(158, 142, 133, 0.15)";
+      ctx.font = `700 ${Math.max(18, cw / 28)}px Inter, sans-serif`;
       ctx.textAlign = "center";
       ctx.fillText(this.mapName.toUpperCase(), cw / 2, ch / 2);
     }
@@ -317,8 +317,8 @@ export class RadarRenderer {
 
   private drawWaitingText(ctx: CanvasRenderingContext2D): void {
     const { width: cw, height: ch } = ctx.canvas;
-    ctx.fillStyle = "#22d3ee";
-    ctx.font = `600 ${Math.max(14, cw / 45)}px Rajdhani, sans-serif`;
+    ctx.fillStyle = "#f05a22";
+    ctx.font = `600 ${Math.max(14, cw / 45)}px Inter, sans-serif`;
     ctx.textAlign = "center";
     ctx.fillText(
       "Aguardando telemetria… (delay configurado)",
@@ -380,11 +380,11 @@ export class RadarRenderer {
 
     // Nome
     const fontPx = Math.max(10, ctx.canvas.width / 130);
-    ctx.font = `600 ${fontPx}px Rajdhani, sans-serif`;
+    ctx.font = `600 ${fontPx}px Inter, sans-serif`;
     ctx.textAlign = "center";
     ctx.fillStyle = "rgba(0,0,0,0.65)";
     ctx.fillText(p.name, sx + 1, sy - r - 7 + 1);
-    ctx.fillStyle = "#e2e8f0";
+    ctx.fillStyle = "#f3ece7";
     ctx.fillText(p.name, sx, sy - r - 7);
 
     // Bomba na mão
@@ -410,7 +410,7 @@ export class RadarRenderer {
       ctx.fillStyle = "rgba(239, 68, 68, 0.25)";
       ctx.fill();
     } else if (bomb.state === "dropped") {
-      ctx.strokeStyle = "rgba(148, 163, 184, 0.9)";
+      ctx.strokeStyle = "rgba(158, 142, 133, 0.9)";
       ctx.lineWidth = 2;
       ctx.strokeRect(sx - 6, sy - 6, 12, 12);
     }

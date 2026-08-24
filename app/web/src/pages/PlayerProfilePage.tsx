@@ -176,15 +176,15 @@ export function PlayerProfilePage() {
               <AreaChart data={series} margin={{ top: 8, right: 12, left: -14, bottom: 0 }}>
                 <defs>
                   <linearGradient id="gradKills" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#22d3ee" stopOpacity={0.45} />
-                    <stop offset="100%" stopColor="#22d3ee" stopOpacity={0.02} />
+                    <stop offset="0%" stopColor="#f05a22" stopOpacity={0.45} />
+                    <stop offset="100%" stopColor="#f05a22" stopOpacity={0.02} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid stroke="#1f2937" strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey="day" stroke="#94a3b8" fontSize={11} />
                 <YAxis stroke="#94a3b8" fontSize={11} allowDecimals={false} />
                 <Tooltip
-                  contentStyle={{ background: "#11161f", border: "1px solid #1f2937", borderRadius: 10 }}
+                  contentStyle={{ background: "#181412", border: "1px solid #2e241f", borderRadius: 10 }}
                   labelStyle={{ color: "#e2e8f0" }}
                   formatter={(value) => [formatNumber(Number(value)), undefined]}
                 />
@@ -192,7 +192,7 @@ export function PlayerProfilePage() {
                   type="monotone"
                   dataKey="killsDia"
                   name={t("profile.charts.killsDay")}
-                  stroke="#22d3ee"
+                  stroke="#f05a22"
                   strokeWidth={2}
                   fill="url(#gradKills)"
                 />
@@ -211,9 +211,9 @@ export function PlayerProfilePage() {
                 <CartesianGrid stroke="#1f2937" strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey="day" stroke="#94a3b8" fontSize={11} />
                 <YAxis yAxisId="skill" stroke="#a78bfa" fontSize={11} allowDecimals={false} />
-                <YAxis yAxisId="kd" orientation="right" stroke="#22d3ee" fontSize={11} />
+                <YAxis yAxisId="kd" orientation="right" stroke="#f05a22" fontSize={11} />
                 <Tooltip
-                  contentStyle={{ background: "#11161f", border: "1px solid #1f2937", borderRadius: 10 }}
+                  contentStyle={{ background: "#181412", border: "1px solid #2e241f", borderRadius: 10 }}
                   labelStyle={{ color: "#e2e8f0" }}
                 />
                 <Legend wrapperStyle={{ fontSize: 12 }} />
@@ -231,7 +231,7 @@ export function PlayerProfilePage() {
                   type="monotone"
                   dataKey="kd"
                   name={t("table.kd")}
-                  stroke="#22d3ee"
+                  stroke="#f05a22"
                   strokeWidth={2}
                   dot={false}
                 />
