@@ -42,6 +42,17 @@ services:
       - ./cs2-plugin/dist:/etc/cs2wstats-plugin:ro
     security_opt:
       - seccomp=unconfined
+    # Saudável somente quando AMBAS as condições passam:
+    # 1) RCON TCP :27015 responde na interface interna (-usercon; srcds não
+    #    escuta em 127.0.0.1, daí hostname -i);
+    # 2) plugin gerando snapshots: /tmp/cs2wstats.heartbeat escrito pelo
+    #    CS2WStats a cada 5 s e com idade <= 15 s.
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'ip=$$(hostname -i); exec 3<>/dev/tcp/$${ip%% *}/27015 && [ -f /tmp/cs2wstats.heartbeat ] && [ $$(($$(date +%s) - $$(cat /tmp/cs2wstats.heartbeat))) -le 15 ]'"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 300s
     networks:
       - cs2-network
 
@@ -58,6 +69,10 @@ services:
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    # Sobe somente depois do servidor de CS2 estar respondendo em :27015
+    depends_on:
+      cs2wstats:
+        condition: service_healthy
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 5s
@@ -76,6 +91,8 @@ services:
     restart: unless-stopped
     depends_on:
       postgres:
+        condition: service_healthy
+      cs2wstats:
         condition: service_healthy
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER:-wstats}:${POSTGRES_PASSWORD:-wstats_secret}@postgres:5432/${POSTGRES_DB:-wstats}?schema=public

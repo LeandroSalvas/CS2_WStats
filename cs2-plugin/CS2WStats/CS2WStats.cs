@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.IO;
 using System.Text.Json;
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
@@ -10,7 +11,7 @@ namespace CS2WStats;
 public class CS2WStats : BasePlugin
 {
     public override string ModuleName => "CS2WStats";
-    public override string ModuleVersion => "1.2.0";
+    public override string ModuleVersion => "1.2.1";
     public override string ModuleAuthor => "CS2WStats";
 
     private readonly HttpClient _http = new();
@@ -20,6 +21,7 @@ public class CS2WStats : BasePlugin
     private string _matchEndUrl = "http://cs2-web-app:3000/api/webhooks/match-end";
     private string _secret = "";
     private CounterStrikeSharp.API.Modules.Timers.Timer? _gsiTimer;
+    private DateTime _lastHeartbeat = DateTime.MinValue; // throttle do heartbeat local (healthcheck)
 
     // ---- Estado da partida corrente (por mapa) ----
     private string? _currentMap;
@@ -365,6 +367,21 @@ public class CS2WStats : BasePlugin
                 allplayers_match_stats,
                 allplayers_teams
             };
+
+            // Heartbeat local para o healthcheck do container: sinaliza que o
+            // plugin está gerando snapshots. Escrita throttled a cada 5 s;
+            // falha de IO nunca pode afetar o loop de telemetria.
+            if ((DateTime.UtcNow - _lastHeartbeat).TotalSeconds >= 5)
+            {
+                _lastHeartbeat = DateTime.UtcNow;
+                try
+                {
+                    File.WriteAllText(
+                        "/tmp/cs2wstats.heartbeat",
+                        DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(CultureInfo.InvariantCulture));
+                }
+                catch { /* /tmp indisponível: ignora */ }
+            }
 
             _ = PostJson(_gsiUrl, payload);
         }
