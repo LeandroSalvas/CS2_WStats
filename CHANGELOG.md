@@ -14,6 +14,17 @@ dated version with an annotated tag.
 ## [Não publicado] / [Unreleased]
 _(nada ainda / nothing yet)_
 
+## [1.3.1] – 2026-08-25
+### Alterado
+- Plugin v1.3.1: filtros `IsBot` adicionados em todos os handlers
+  (PlayerDeath, PlayerHurt, WeaponFire, BombPlanted, BombDefused,
+  PlayerConnectFull) e no loop GSI — bots existem no jogo (treino,
+  utilitários) mas são completamente invisíveis no app
+- Bots adicionados via RCON `bot_add` não geram stats, ranking, kill
+  feed nem registros no banco
+- Plugin v1.3.1: `IsBot` guards added across all event handlers and the
+  GSI loop — bots play on the server but are fully invisible to the app
+
 ## [1.3.0] – 2026-08-25
 ### Removido
 - Bots do servidor CS2: `bot_quota 0` em runtime via RCON, linhas

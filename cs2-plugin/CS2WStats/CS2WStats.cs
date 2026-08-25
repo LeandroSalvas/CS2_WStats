@@ -11,7 +11,7 @@ namespace CS2WStats;
 public class CS2WStats : BasePlugin
 {
     public override string ModuleName => "CS2WStats";
-    public override string ModuleVersion => "1.2.1";
+    public override string ModuleVersion => "1.3.1";
     public override string ModuleAuthor => "CS2WStats";
 
     private readonly HttpClient _http = new();
@@ -90,7 +90,7 @@ public class CS2WStats : BasePlugin
     private HookResult OnPlayerDeath(EventPlayerDeath @event, GameEventInfo info)
     {
         var victim = @event.Userid;
-        if (victim == null || !victim.IsValid || victim.IsHLTV) return HookResult.Continue;
+        if (victim == null || !victim.IsValid || victim.IsHLTV || victim.IsBot) return HookResult.Continue;
 
         var attacker = @event.Attacker;
         var assister = @event.Assister;
@@ -98,7 +98,7 @@ public class CS2WStats : BasePlugin
         var vKey = PlayerKey(victim);
         GetAccum(victim).Deaths++;
 
-        if (attacker != null && attacker.IsValid && !attacker.IsHLTV && attacker.Handle != victim.Handle)
+        if (attacker != null && attacker.IsValid && !attacker.IsHLTV && !attacker.IsBot && attacker.Handle != victim.Handle)
         {
             var accA = GetAccum(attacker);
             accA.Kills++;
@@ -110,7 +110,7 @@ public class CS2WStats : BasePlugin
                 accA.dTk++;
         }
 
-        if (assister != null && assister.IsValid && !assister.IsHLTV &&
+        if (assister != null && assister.IsValid && !assister.IsHLTV && !assister.IsBot &&
             assister.Handle != victim.Handle && (attacker == null || assister.Handle != attacker.Handle))
         {
             GetAccum(assister).Assists++;
@@ -118,7 +118,7 @@ public class CS2WStats : BasePlugin
 
         var payload = new
         {
-            attacker = attacker != null && attacker.IsValid && !attacker.IsHLTV ? new
+            attacker = attacker != null && attacker.IsValid && !attacker.IsHLTV && !attacker.IsBot ? new
             {
                 steamId = PlayerKey(attacker),
                 name = attacker.PlayerName,
@@ -142,8 +142,8 @@ public class CS2WStats : BasePlugin
     {
         var attacker = @event.Attacker;
         var victim = @event.Userid;
-        if (attacker == null || !attacker.IsValid || attacker.IsHLTV) return HookResult.Continue;
-        if (victim == null || !victim.IsValid || victim.IsHLTV) return HookResult.Continue;
+        if (attacker == null || !attacker.IsValid || attacker.IsHLTV || attacker.IsBot) return HookResult.Continue;
+        if (victim == null || !victim.IsValid || victim.IsHLTV || victim.IsBot) return HookResult.Continue;
         if (attacker.Handle == victim.Handle) return HookResult.Continue;
 
         var acc = GetAccum(attacker);
@@ -156,7 +156,7 @@ public class CS2WStats : BasePlugin
     private HookResult OnWeaponFire(EventWeaponFire @event, GameEventInfo info)
     {
         var shooter = @event.Userid;
-        if (shooter == null || !shooter.IsValid || shooter.IsHLTV) return HookResult.Continue;
+        if (shooter == null || !shooter.IsValid || shooter.IsHLTV || shooter.IsBot) return HookResult.Continue;
 
         var weapon = @event.Weapon ?? "";
         if (weapon.StartsWith("weapon_knife") ||
@@ -174,7 +174,7 @@ public class CS2WStats : BasePlugin
     private HookResult OnBombPlanted(EventBombPlanted @event, GameEventInfo info)
     {
         var planter = @event.Userid;
-        if (planter == null || !planter.IsValid || planter.IsHLTV) return HookResult.Continue;
+        if (planter == null || !planter.IsValid || planter.IsHLTV || planter.IsBot) return HookResult.Continue;
         GetAccum(planter).dPlants++;
         return HookResult.Continue;
     }
@@ -182,7 +182,7 @@ public class CS2WStats : BasePlugin
     private HookResult OnBombDefused(EventBombDefused @event, GameEventInfo info)
     {
         var defuser = @event.Userid;
-        if (defuser == null || !defuser.IsValid || defuser.IsHLTV) return HookResult.Continue;
+        if (defuser == null || !defuser.IsValid || defuser.IsHLTV || defuser.IsBot) return HookResult.Continue;
         GetAccum(defuser).dDefusions++;
         return HookResult.Continue;
     }
@@ -190,7 +190,7 @@ public class CS2WStats : BasePlugin
     private HookResult OnPlayerConnectFull(EventPlayerConnectFull @event, GameEventInfo info)
     {
         var player = @event.Userid;
-        if (player == null || !player.IsValid || player.IsHLTV) return HookResult.Continue;
+        if (player == null || !player.IsValid || player.IsHLTV || player.IsBot) return HookResult.Continue;
         GetAccum(player).dConnections++;
         return HookResult.Continue;
     }
@@ -280,7 +280,7 @@ public class CS2WStats : BasePlugin
 
             foreach (var p in Utilities.GetPlayers())
             {
-                if (!p.IsValid || p.IsHLTV) continue;
+                if (!p.IsValid || p.IsHLTV || p.IsBot) continue;
                 var pawn = p.PlayerPawn.Value;
                 if (pawn == null || !pawn.IsValid) continue;
 
