@@ -227,15 +227,7 @@ sed -i -e "s/{{SERVER_HOSTNAME}}/${CS2_SERVERNAME}/g" \
        -e "s/{{SERVER_LOG_ITEMS}}/${CS2_LOG_ITEMS}/g" \
        "${STEAMAPPDIR}"/game/csgo/cfg/server.cfg
 
-if [[ ! -z $CS2_BOT_DIFFICULTY ]] ; then
-    sed -i "s/bot_difficulty.*/bot_difficulty ${CS2_BOT_DIFFICULTY}/" "${STEAMAPPDIR}"/game/csgo/cfg/*.cfg
-fi
-if [[ ! -z $CS2_BOT_QUOTA ]] ; then
-    sed -ri "s/bot_quota[[:space:]]+.*/bot_quota ${CS2_BOT_QUOTA}/" "${STEAMAPPDIR}"/game/csgo/cfg/*.cfg
-fi
-if [[ ! -z $CS2_BOT_QUOTA_MODE ]] ; then
-    sed -i "s/bot_quota_mode.*/bot_quota_mode ${CS2_BOT_QUOTA_MODE}/" "${STEAMAPPDIR}"/game/csgo/cfg/*.cfg
-fi
+# Bots removidos — v1.3.0 (blocos de env var removidos)
 
 # Switch to server directory
 cd "${STEAMAPPDIR}/game/bin/linuxsteamrt64"

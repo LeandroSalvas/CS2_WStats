@@ -217,7 +217,6 @@ export function parseStatus(raw: string): ParsedStatus {
 // ---------------------------------------------------------------------------
 
 export interface EnrichedPlayer extends StatusPlayer {
-  isBot: boolean;
   team: string | null;
   kills: number | null;
   deaths: number | null;
@@ -247,7 +246,6 @@ export async function listPlayers(): Promise<{
     return {
       ...sp,
       steamId64: sp.steamId64 ?? live?.steamId ?? null,
-      isBot: sp.uniqueId === "BOT",
       team: live?.team === "UNASSIGNED" ? null : live?.team ?? null,
       kills: live?.kills ?? null,
       deaths: live?.deaths ?? null,
@@ -269,7 +267,6 @@ export async function listPlayers(): Promise<{
       steamId64: lp.steamId,
       connectedTime: null,
       ping: null,
-      isBot: lp.id.startsWith("bot:") || lp.steamId == null,
       team: lp.team === "UNASSIGNED" ? null : lp.team,
       kills: lp.kills,
       deaths: lp.deaths,

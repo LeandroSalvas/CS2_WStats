@@ -14,6 +14,21 @@ dated version with an annotated tag.
 ## [Não publicado] / [Unreleased]
 _(nada ainda / nothing yet)_
 
+## [1.3.0] – 2026-08-25
+### Removido
+- Bots do servidor CS2: `bot_quota 0` em runtime via RCON, linhas
+  `bot_*` comentadas em `server.cfg`, blocos de env vars removidos do
+  `entry.sh` (prevenção contra recriação no próximo boot)
+- 28 jogadores bot (`bot:<nome>`) e 6 partidas órfãs (bot-only)
+  purgados do banco de dados
+- Código morto removido: badge `isBot` do painel RCON, campo `isBot`
+  do type `ConnectedPlayer` (server e client)
+- Renamed: `.tag-bot` → `.tag-admin` (classe reutilizada pelo painel
+  de usuários para badge de admin)
+- Removed: bots from CS2 server (`bot_quota 0`), 28 bot players and
+  6 orphan bot-only matches purged from database; dead bot code cleaned
+  from RCON panel and types; `.tag-bot` renamed to `.tag-admin`
+
 ## [1.2.0] – 2026-08-25
 ### Adicionado
 - Healthcheck duplo do CS2: RCON TCP :27015 na interface interna **e**

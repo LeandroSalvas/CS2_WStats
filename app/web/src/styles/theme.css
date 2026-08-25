@@ -780,7 +780,7 @@ main { flex: 1; width: 100%; max-width: 1280px; margin: 0 auto; padding: 24px 20
 .btn-small.btn-super:hover:not(:disabled) { border-color: var(--tr); }
 .btn-small.btn-danger-outline { border-color: rgba(239, 68, 68, 0.4); color: var(--danger); }
 .btn-small.btn-danger-outline:hover:not(:disabled) { border-color: var(--danger); }
-.tag-bot {
+.tag-admin {
   margin-left: 8px;
   background: rgba(240, 90, 34, 0.12);
   color: var(--accent);

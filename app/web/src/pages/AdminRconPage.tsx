@@ -273,7 +273,6 @@ export function AdminRconPage() {
                   <td className="mono">{p.userid || "—"}</td>
                   <td>
                     <span className="player-name">{p.name}</span>
-                    {p.isBot && <span className="tag-bot">BOT</span>}
                   </td>
                   <td>{p.team ?? "—"}</td>
                   <td className="mono">

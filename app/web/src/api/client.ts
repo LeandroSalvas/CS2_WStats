@@ -75,7 +75,6 @@ export interface RconPlayer {
   steamId64: string | null;
   connectedTime: string | null;
   ping: number | null;
-  isBot: boolean;
   team: string | null;
   kills: number | null;
   deaths: number | null;

@@ -113,7 +113,7 @@ export function AdminUsersPage() {
                 <tr key={u.id}>
                   <td>
                     <span className="player-name">{u.name}</span>
-                    {u.isLocalAdmin && <span className="tag-bot">{t("users.fixedTag")}</span>}
+                    {u.isLocalAdmin && <span className="tag-admin">{t("users.fixedTag")}</span>}
                   </td>
                   <td>{u.email}</td>
                   <td>
