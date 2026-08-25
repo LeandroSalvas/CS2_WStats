@@ -14,6 +14,17 @@ dated version with an annotated tag.
 ## [Não publicado] / [Unreleased]
 _(nada ainda / nothing yet)_
 
+## [1.3.2] – 2026-08-25
+### Corrigido
+- Porta do servidor CS2: `CS2_PORT` alinhada de 27015 para 27035 (porta
+  interna = externa), eliminando conflito com CS 1.6 na porta 27015;
+  healthcheck e RCON_PORT atualizados para 27035
+- Região do servidor: `sv_region` corrigido de 2 (Europa) para 1
+  (América do Sul) — servidor aparece na região correta no server browser
+- Fixed: CS2 port aligned to 27035 (internal = external), resolving
+  conflict with CS 1.6 on host port 27015; healthcheck and RCON_PORT
+  updated; server region corrected to South America
+
 ## [1.3.1] – 2026-08-25
 ### Alterado
 - Plugin v1.3.1: filtros `IsBot` adicionados em todos os handlers

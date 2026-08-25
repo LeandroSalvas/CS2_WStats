@@ -8,7 +8,7 @@ services:
     image: cm2network/cs2
     restart: always
     environment:
-      CS2_PORT: "27015"
+      CS2_PORT: "27035"
       CS2_MAXPLAYERS: ${CS2_MAXPLAYERS:-24}
       CS2_SERVERNAME: ${CS2_SERVERNAME}
       CS2_STARTMAP: ${CS2_STARTMAP:-de_dust2}
@@ -27,8 +27,8 @@ services:
       STEAMAPPVALIDATE: ${STEAMAPPVALIDATE:-0}
       WEBHOOK_SECRET: ${WEBHOOK_SECRET:-}
     ports:
-      - "27035:27015/udp"
-      - "27035:27015/tcp"
+      - "27035:27035/udp"
+      - "27035:27035/tcp"
       - "27036:27016/udp"
       - "27036:27016/tcp"
     volumes:
@@ -43,12 +43,12 @@ services:
     security_opt:
       - seccomp=unconfined
     # Saudável somente quando AMBAS as condições passam:
-    # 1) RCON TCP :27015 responde na interface interna (-usercon; srcds não
+    # 1) RCON TCP :27035 responde na interface interna (-usercon; srcds não
     #    escuta em 127.0.0.1, daí hostname -i);
     # 2) plugin gerando snapshots: /tmp/cs2wstats.heartbeat escrito pelo
     #    CS2WStats a cada 5 s e com idade <= 15 s.
     healthcheck:
-      test: ["CMD-SHELL", "bash -c 'ip=$$(hostname -i); exec 3<>/dev/tcp/$${ip%% *}/27015 && [ -f /tmp/cs2wstats.heartbeat ] && [ $$(($$(date +%s) - $$(cat /tmp/cs2wstats.heartbeat))) -le 15 ]'"]
+      test: ["CMD-SHELL", "bash -c 'ip=$$(hostname -i); exec 3<>/dev/tcp/$${ip%% *}/27035 && [ -f /tmp/cs2wstats.heartbeat ] && [ $$(($$(date +%s) - $$(cat /tmp/cs2wstats.heartbeat))) -le 15 ]'"]
       interval: 10s
       timeout: 5s
       retries: 30
@@ -114,7 +114,7 @@ services:
       APP_PUBLIC_URL: ${APP_PUBLIC_URL:-}
       # ---- RCON (painel admin) ----
       RCON_HOST: ${RCON_HOST:-cs2wstats}
-      RCON_PORT: ${RCON_PORT:-27015}
+      RCON_PORT: ${RCON_PORT:-27035}
       RCON_PASSWORD: ${RCON_PASSWORD:-}
       RCON_BLOCKED_COMMANDS: ${RCON_BLOCKED_COMMANDS:-quit,_restart,exit,sv_password}
     ports:
