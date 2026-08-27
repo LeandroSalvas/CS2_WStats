@@ -39,9 +39,27 @@ model Player {
 
   matchStats MatchPlayerStat[]
   dailyStats PlayerDailyStat[]
+  killsKilled KillRecord[] @relation("KillAttacker")
 
   @@index([totalKills])
   @@map("players")
+}
+
+/** Abate de um jogador humano sobre uma vítima (humana OU bot). */
+model KillRecord {
+  id              Int      @id @default(autoincrement())
+  attackerSteamId String
+  victimSteamId   String // pode ser "bot:<nome>" (bots não têm linha em players)
+  victimName      String
+  victimIsBot     Boolean  @default(false)
+  weapon          String?
+  isHeadshot      Boolean  @default(false)
+  createdAt       DateTime @default(now())
+
+  attacker Player @relation("KillAttacker", fields: [attackerSteamId], references: [steamId], onDelete: Cascade)
+
+  @@index([attackerSteamId, createdAt])
+  @@map("kill_records")
 }
 
 /** Série diária para gráficos de evolução (agregada em tempo real nos webhooks). */

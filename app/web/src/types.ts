@@ -134,6 +134,13 @@ export interface PlayerProfile {
     assists: number;
     headshots: number;
   }>;
+  kills: Array<{
+    victimName: string;
+    victimIsBot: boolean;
+    weapon: string | null;
+    isHeadshot: boolean;
+    createdAt: string;
+  }>;
 }
 
 /* ---------------- Radar ao vivo (WebSocket) ---------------- */
@@ -176,6 +183,7 @@ export interface KillFeedEntry {
   attackerTeam: string | null;
   victimName: string;
   victimTeam: string;
+  victimIsBot: boolean;
   weapon: string | null;
   isHeadshot: boolean;
 }

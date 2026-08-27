@@ -243,6 +243,39 @@ export function PlayerProfilePage() {
         </section>
       </div>
 
+      {/* -------------------- Vítimas (kill tracking) -------------------- */}
+      <section className="panel">
+        <h3>{t("profile.victims.title")}</h3>
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th>{t("profile.victims.victim")}</th>
+              <th>{t("profile.victims.weapon")}</th>
+              <th className="num">{t("profile.victims.hs")}</th>
+              <th>{t("profile.victims.date")}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.kills.map((k, i) => (
+              <tr key={i}>
+                <td>
+                  {k.victimName}
+                  {k.victimIsBot && <span className="kf-bot">{t("killfeed.bot")}</span>}
+                </td>
+                <td>{k.weapon ?? "—"}</td>
+                <td className="num">{k.isHeadshot ? "💥" : "—"}</td>
+                <td>{fmtDate(k.createdAt)}</td>
+              </tr>
+            ))}
+            {data.kills.length === 0 && (
+              <tr>
+                <td colSpan={4} className="empty-row">{t("profile.victims.empty")}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </section>
+
       {/* -------------------- Histórico recente -------------------- */}
       <section className="panel">
         <h3>{t("profile.recentTitle")}</h3>

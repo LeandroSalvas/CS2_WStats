@@ -47,6 +47,10 @@ export async function playerRoutes(app: FastifyInstance): Promise<void> {
             include: { match: { select: { id: true, mapName: true, endedAt: true, durationSeconds: true } } },
           },
           dailyStats: { orderBy: { day: "asc" } },
+          killsKilled: {
+            orderBy: { createdAt: "desc" },
+            take: 20,
+          },
         },
       });
       if (!player) return reply.code(404).send({ error: "jogador não encontrado" });
@@ -118,6 +122,13 @@ export async function playerRoutes(app: FastifyInstance): Promise<void> {
           deaths: s.deaths,
           assists: s.assists,
           headshots: s.headshots,
+        })),
+        kills: player.killsKilled.map((k) => ({
+          victimName: k.victimName,
+          victimIsBot: k.victimIsBot,
+          weapon: k.weapon,
+          isHeadshot: k.isHeadshot,
+          createdAt: k.createdAt,
         })),
       };
     },

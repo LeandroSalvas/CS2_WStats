@@ -11,7 +11,7 @@ namespace CS2WStats;
 public class CS2WStats : BasePlugin
 {
     public override string ModuleName => "CS2WStats";
-    public override string ModuleVersion => "1.3.1";
+    public override string ModuleVersion => "1.3.3";
     public override string ModuleAuthor => "CS2WStats";
 
     private readonly HttpClient _http = new();
@@ -89,16 +89,22 @@ public class CS2WStats : BasePlugin
 
     private HookResult OnPlayerDeath(EventPlayerDeath @event, GameEventInfo info)
     {
+        // A vítima pode ser bot: queremos reportar o kill de um HUMANO sobre um
+        // bot (para tracking), mantendo o bot como não-jogador no app. Por isso
+        // NÃO retornamos cedo quando victim.IsBot.
         var victim = @event.Userid;
-        if (victim == null || !victim.IsValid || victim.IsHLTV || victim.IsBot) return HookResult.Continue;
+        if (victim == null || !victim.IsValid || victim.IsHLTV) return HookResult.Continue;
 
         var attacker = @event.Attacker;
         var assister = @event.Assister;
 
-        var vKey = PlayerKey(victim);
-        GetAccum(victim).Deaths++;
+        // Death só conta para humanos (bot não vira player).
+        if (!victim.IsBot) GetAccum(victim).Deaths++;
 
-        if (attacker != null && attacker.IsValid && !attacker.IsHLTV && !attacker.IsBot && attacker.Handle != victim.Handle)
+        // Apenas um atacante HUMANO gera kill contabilizado e registro de abate.
+        var humanAttacker = attacker != null && attacker.IsValid && !attacker.IsHLTV &&
+                            !attacker.IsBot && attacker.Handle != victim.Handle;
+        if (humanAttacker)
         {
             var accA = GetAccum(attacker);
             accA.Kills++;
@@ -116,24 +122,29 @@ public class CS2WStats : BasePlugin
             GetAccum(assister).Assists++;
         }
 
-        var payload = new
+        // Reporta o abate toda vez que um HUMANO é o autor — a vítima pode ser
+        // humana (steamId64) ou bot ("bot:<nome>"). O backend decide persistir.
+        if (humanAttacker)
         {
-            attacker = attacker != null && attacker.IsValid && !attacker.IsHLTV && !attacker.IsBot ? new
+            var payload = new
             {
-                steamId = PlayerKey(attacker),
-                name = attacker.PlayerName,
-                team = TeamStr(attacker.TeamNum)
-            } : null,
-            victim = new
-            {
-                steamId = vKey,
-                name = victim.PlayerName,
-                team = TeamStr(victim.TeamNum)
-            },
-            headshot = @event.Headshot,
-            weapon = @event.Weapon
-        };
-        _ = PostJson(_killsUrl, payload);
+                attacker = new
+                {
+                    steamId = PlayerKey(attacker),
+                    name = attacker.PlayerName,
+                    team = TeamStr(attacker.TeamNum)
+                },
+                victim = new
+                {
+                    steamId = PlayerKey(victim),
+                    name = victim.PlayerName,
+                    team = TeamStr(victim.TeamNum)
+                },
+                headshot = @event.Headshot,
+                weapon = @event.Weapon
+            };
+            _ = PostJson(_killsUrl, payload);
+        }
         return HookResult.Continue;
     }
 

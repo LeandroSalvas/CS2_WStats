@@ -34,7 +34,10 @@ export function KillFeed({ kills }: { kills: KillFeedItem[] }) {
                 {k.attackerName ?? t("killfeed.world")}
               </span>
               <span className="kf-arrow">→</span>
-              <span className={`kf-name ${teamClass(k.victimTeam)}`}>{k.victimName}</span>
+              <span className={`kf-name ${teamClass(k.victimTeam)}`}>
+                {k.victimName}
+                {k.victimIsBot && <span className="kf-bot">{t("killfeed.bot")}</span>}
+              </span>
               <span className="kf-icon">
                 {weaponIcon(k.weapon)}
                 {k.isHeadshot && <span className="kf-hs" title={t("killfeed.headshot")}>💥</span>}

@@ -14,6 +14,35 @@ dated version with an annotated tag.
 ## [Não publicado] / [Unreleased]
 _(nada ainda / nothing yet)_
 
+## [1.3.3] – 2026-08-27
+### Adicionado
+- **Tracking de vítimas (KillRecord)**: o plugin agora reporta, para cada
+  abate, quem o jogador matou (humano ou bot), com arma, headshot e
+  momento. Bots nunca são criados como player — a vítima bot é registrada
+  apenas como `bot:<nome>` denormalizado
+- Kills em bots contam no `totalKills`/`totalDeaths` do jogador (decisão
+  de produto: kills de bot contam como kills normais)
+- Kill feed ao vivo: vítimas bot exibem badge `[BOT]`
+- Perfil do jogador: nova seção "Abates Recentes" (vítima, arma, HS, data),
+  com os 20 abates mais recentes
+- Limite de 500 abates persistidos por jogador (FIFO por data — abates mais
+  antigos são podados automaticamente)
+- NOVO schema: tabela `kill_records` (migração `kill_record` aplicada)
+- Kill tracking: plugin reports every frag's victim (human or bot), weapon,
+  headshot and time. Bots are never created as players — a bot victim is
+  stored denormalized as `bot:<name>`. Bot kills count toward totalKills;
+  `[BOT]` badge in live kill feed; new "Recent Kills" section on the player
+  profile (20 most recent); per-player cap of 500 persisted kills (FIFO
+  prune). New `kill_records` table via `kill_record` migration.
+
+### Corrigido
+- Erro 502 ao consultar jogadores via RCON causado por `RCON_PORT` obsoleto
+  no container web-app (`docker-compose restart` não reaplica o `.env`) —
+  corrigido recriando o container para reaplicar `RCON_PORT=27035`
+- Fixed: RCON 502 error caused by a stale `RCON_PORT` in the web-app
+  container (`docker-compose restart` does not reapply `.env`) — container
+  recreated to reapply `RCON_PORT=27035`
+
 ## [1.3.2] – 2026-08-25
 ### Corrigido
 - Porta do servidor CS2: `CS2_PORT` alinhada de 27015 para 27035 (porta

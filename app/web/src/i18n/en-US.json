@@ -126,13 +126,22 @@
     "recentTitle": "🗂️ Recent History",
     "table": {
       "date": "Date"
+    },
+    "victims": {
+      "title": "🎯 Recent Kills",
+      "victim": "Victim",
+      "weapon": "Weapon",
+      "hs": "HS",
+      "date": "Date",
+      "empty": "No kills recorded yet."
     }
   },
   "killfeed": {
     "title": "Kill Feed",
     "empty": "Waiting for kills…",
     "world": "world",
-    "headshot": "Headshot"
+    "headshot": "Headshot",
+    "bot": "BOT"
   },
   "login": {
     "title": "Sign in",

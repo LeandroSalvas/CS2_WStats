@@ -320,6 +320,18 @@ main { flex: 1; width: 100%; max-width: 1280px; margin: 0 auto; padding: 24px 20
 .kf-arrow { color: var(--text-dim); flex-shrink: 0; }
 .kf-icon { margin-left: auto; flex-shrink: 0; display: inline-flex; align-items: center; gap: 3px; }
 .kf-hs { font-size: 12px; }
+.kf-bot {
+  margin-left: 6px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--accent);
+  background: rgba(240, 90, 34, 0.12);
+  border: 1px solid rgba(240, 90, 34, 0.25);
+  border-radius: 4px;
+  padding: 0 4px;
+  vertical-align: middle;
+}
 
 .pagination { display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 16px; }
 .pagination button {

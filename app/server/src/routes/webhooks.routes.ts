@@ -16,6 +16,9 @@ const participant = z.object({
   team: z.string().optional(),
 });
 
+/** Limite de abates persistidos por jogador (FIFO por ordem de id). */
+const MAX_KILL_RECORDS_PER_PLAYER = 500;
+
 function readParticipant(
   body: Record<string, unknown>,
   prefix: string,
@@ -174,6 +177,7 @@ export async function webhookRoutes(app: FastifyInstance, deps: RouteDeps): Prom
           attackerTeam: attacker?.team ?? null,
           victimName: victim.name,
           victimTeam: victim.team ?? "UNASSIGNED",
+          victimIsBot: victim.steamId.toLowerCase().startsWith("bot:"),
           weapon: hs.success ? (hs.data.weapon ?? null) : null,
           isHeadshot: hs.success && hs.data.headshot,
         });
@@ -188,8 +192,44 @@ export async function webhookRoutes(app: FastifyInstance, deps: RouteDeps): Prom
           kills: 1,
           headshots: hs.success && hs.data.headshot ? 1 : 0,
         });
+
+        // Registra a vítima do abate (humana OU bot). Bots nunca são criados
+        // como player — a vítima bot é denormalizada aqui no registro.
+        if (victim) {
+          const victimIsBot = victim.steamId.toLowerCase().startsWith("bot:");
+          await prisma.killRecord.create({
+            data: {
+              attackerSteamId: attacker.steamId,
+              victimSteamId: victimIsBot ? victim.steamId : (victim.steamId ?? ""),
+              victimName: victim.name,
+              victimIsBot,
+              weapon: hs.success ? (hs.data.weapon ?? null) : null,
+              isHeadshot: hs.success && hs.data.headshot,
+            },
+          });
+
+          // Prune: mantém apenas os 500 abates mais recentes por jogador.
+          const excess = await prisma.killRecord.count({
+            where: { attackerSteamId: attacker.steamId },
+          });
+          if (excess > MAX_KILL_RECORDS_PER_PLAYER) {
+            const rows = await prisma.killRecord.findMany({
+              where: { attackerSteamId: attacker.steamId },
+              orderBy: { id: "desc" },
+              select: { id: true },
+              take: MAX_KILL_RECORDS_PER_PLAYER,
+              skip: MAX_KILL_RECORDS_PER_PLAYER,
+            });
+            if (rows.length > 0) {
+              await prisma.killRecord.deleteMany({
+                where: { id: { in: rows.map((r) => r.id) } },
+              });
+            }
+          }
+        }
       }
-      if (victim) {
+      // Death só conta para a vítima se humana — bots nunca viram player.
+      if (victim && !victim.steamId.toLowerCase().startsWith("bot:")) {
         await upsertAndIncrement(victim, { totalDeaths: 1 });
         await bumpDaily(victim.steamId, { deaths: 1 });
       }

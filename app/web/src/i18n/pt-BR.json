@@ -126,13 +126,22 @@
     "recentTitle": "🗂️ Histórico Recente",
     "table": {
       "date": "Data"
+    },
+    "victims": {
+      "title": "🎯 Abates Recentes",
+      "victim": "Vítima",
+      "weapon": "Arma",
+      "hs": "HS",
+      "date": "Data",
+      "empty": "Nenhum abate registrado ainda."
     }
   },
   "killfeed": {
     "title": "Kill Feed",
     "empty": "Aguardando abates…",
     "world": "mundo",
-    "headshot": "Headshot"
+    "headshot": "Headshot",
+    "bot": "BOT"
   },
   "login": {
     "title": "Entrar",

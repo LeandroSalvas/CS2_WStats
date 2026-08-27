@@ -7,6 +7,7 @@ export interface KillFeedEntry {
   attackerTeam: string | null; // "CT" | "TR" | "UNASSIGNED"
   victimName: string;
   victimTeam: string;
+  victimIsBot: boolean;
   weapon: string | null;
   isHeadshot: boolean;
 }
